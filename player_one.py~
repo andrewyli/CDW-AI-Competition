@@ -1,0 +1,13 @@
+from game import Game
+from board import Board
+
+
+class Player_One:
+    
+    def __init__(self, p):
+        self.score = p  # number of boxes you have filled in
+
+    def move(self, game):
+        # Your task: fill this in!
+        # should return a box duple index and which of its edges (0, 1, 2 or 3 = up right down left) to update
+        pass

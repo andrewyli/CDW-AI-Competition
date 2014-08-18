@@ -1,0 +1,6 @@
+
+
+class Player:
+    
+    def __init__(self, p):
+        self.points = p  # number of boxes you have filled in

@@ -1,0 +1,2 @@
+class Edge:
+    def __init__():

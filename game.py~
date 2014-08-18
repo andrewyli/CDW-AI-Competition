@@ -1,0 +1,20 @@
+from board import Board
+
+
+class Game:
+    def __init__(self, b):
+        self.boards = b  # a list of boards
+
+    def finished(self):  # if there exists more squares to be filled
+        if self.fill_count() == len(self.boards) ** 2:
+            return True
+        return False
+
+    def fill_count(self):
+        count = 0
+        for i in range(len(self.boards)):
+            for j in range(len(self.boards)):
+                if self.boards[i][j].filled:
+                    count += 1
+        return count
+        
