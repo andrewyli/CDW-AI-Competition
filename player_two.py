@@ -25,5 +25,7 @@ class Player_Two:
                     poss_moves.append([i, j, 3])
         if len(poss_moves) == 0:
             return [-1, -1, -1]
+        elif len(poss_moves) == 1:
+            return poss_moves[0]
         rand_num = random.randint(0, len(poss_moves) - 1)
         return poss_moves[rand_num]

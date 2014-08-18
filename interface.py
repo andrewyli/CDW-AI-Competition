@@ -109,12 +109,24 @@ def main():
             triple = p2.move(game)
         if triple[0] != -1:
             cur_board.fill_edge(triple[0], triple[1], triple[2], curturn)
-        if cur_board.grid[triple[0]][triple[1]].left != 0 and cur_board.grid[triple[0]][triple[1]].down != 0 and cur_board.grid[triple[0]][triple[1]].right != 0 and cur_board.grid[triple[0]][triple[1]].up != 0:  # if a square was filled in
+
+        p = curturn
+        cur_square = cur_board.grid[triple[0]][triple[1]]
+        if triple[2] == 0:
+            if triple[1] > 1:
+                cur_square = cur_board.grid[triple[0]][triple[1] - 1]
+        elif triple[2] == 1:
+            if triple[0] < GRID_SIZE - 1:
+                cur_square = cur_board.grid[triple[0] + 1][triple[1]]
+        elif triple[2] == 2:
+            if triple[1] < GRID_SIZE - 1:
+                cur_square = cur_board.grid[triple[0]][triple[1] + 1]
+        else:
+            if triple[0] > 1:
+                cur_square = cur_board.grid[triple[0] - 1][triple[1]]
+
+        if cur_board.grid[triple[0]][triple[1]].left != 0 and cur_board.grid[triple[0]][triple[1]].down != 0 and cur_board.grid[triple[0]][triple[1]].right != 0 and cur_board.grid[triple[0]][triple[1]].up != 0 or cur_square.left != 0 and cur_square.down != 0 and cur_square.up != 0 and cur_square.right != 0:  # if a square was filled in
             cur_board.grid[i][j].filled = True
-            if (curturn == 1):
-                p1.score += 1
-            else:
-                p2.score += 1
             if curturn == 1:
                 p1.score += 1
             else:
@@ -123,7 +135,7 @@ def main():
             curturn = curturn % 2 + 1  # if a square wasn't filled, it's now the next person's turn
         pygame.display.update()
         game.boards.append(cur_board)
-        time.sleep(0.01)
+        time.sleep(0.25)
     # game_end function
     game_end(game, p1, p2)
 main()
