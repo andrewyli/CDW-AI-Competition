@@ -23,4 +23,3 @@ class Player_One:
                 elif cur_board.grid[i][j].left == 0:
                     return [i, j, 3]
         return [-1, -1, -1]
-                

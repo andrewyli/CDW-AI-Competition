@@ -17,4 +17,3 @@ class Game:
                 if self.boards[len(self.boards) - 1].grid[i][j].filled:
                     count += 1
         return count
-        

@@ -39,7 +39,7 @@ def setup():  # creates the game
     return Game(boards)
 
 
-def setup_dots(GRID_SIZE):
+def setup_dots():
     dots = []
     for i in range(GRID_SIZE + 1):
         for j in range(GRID_SIZE + 1):
@@ -49,11 +49,11 @@ def setup_dots(GRID_SIZE):
 
 def main():
     game = setup()
+    dots = setup_dots()
     p1 = Player_One(0)
     p2 = Player_Two(0)
 
     curturn = 1  # whoever's turn it is
-    num_filled = 0
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -62,10 +62,8 @@ def main():
         # display dots and background
         cur_board = copy.deepcopy(game.boards[len(game.boards) - 1])
         screen.blit(background, (0, 0))
-        for i in range(len(cur_board.grid) + 1):
-            for j in range(len(cur_board.grid) + 1):
-                d = Dot(dot_blue, i * 74, j * 74)
-                screen.blit(d.image, d.rect)
+        for d in dots:
+            screen.blit(d.image, d.rect)
 
         # check to see which edges should be displayed
         for i in range(len(cur_board.grid)):
@@ -96,18 +94,22 @@ def main():
                 screen.blit(e4.image, e4.rect)
 
         # move
-        triple = [None, None, None]
+        triple = [-1, -1, -1]
         if curturn == 1:
             triple = p1.move(game)
         else:
-            assert curturn == 2, "It is not either of their turn??!"
+            assert curturn == 2, "It is not either of their turn (somehow)!"
             triple = p2.move(game)
         if triple[0] != -1:
             cur_board.fill_edge(triple[0], triple[1], triple[2], curturn)
-
-        # update who's turn it is
-        if num_filled != game.fill_count():  # if a square was filled in
-            num_filled = game.fill_count()
+        print triple
+        if cur_board.grid[i][j].left != 0 and cur_board.grid[i][j].down != 0 and cur_board.grid[i][j].right != 0 and cur_board.grid[i][j].up != 0:  # if a square was filled in
+            cur_board.grid[i][j].filled = True
+            print "yas"
+            if (curturn == 1):
+                p1.score += 1
+            else:
+                p2.score += 1
             if curturn == 1:
                 p1.score += 1
             else:
@@ -117,4 +119,6 @@ def main():
         pygame.display.update()
         game.boards.append(cur_board)
         time.sleep(1)
+        if game.fill_count() == GRID_SIZE ** 2:
+            sys.exit()
 main()
