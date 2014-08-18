@@ -82,19 +82,22 @@ class Player_One:
             rand = random.randint(0,len(moves) - 1)
             return moves[rand]
         
-
         else:
             for i in range(len(cur_board.grid)):
                 for j in range(len(cur_board.grid)):
                     if cur_board.grid[i][j].up == 0:
-                        return [i, j, 0]
+                        moves.append( [i, j, 0])
                     elif cur_board.grid[i][j].right == 0:
-                        return [i, j, 1]
+                        moves.append( [i, j, 1])
                     elif cur_board.grid[i][j].down == 0:
-                        return [i, j, 2]
+                        moves.append( [i, j, 2])
                     elif cur_board.grid[i][j].left == 0:
-                        return [i, j, 3]
-                    
+                        moves.append( [i, j, 3])
+            
+        if(len(moves) > 0):
+            rand = random.randint(0,len(moves) - 1)
+            return moves[rand]
+         
         return[-1, -1, -1]                
                     
     
