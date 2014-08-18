@@ -50,9 +50,9 @@ class Player_One:
                     if(cur_board.grid[i][j].right == 0):
                         return [i, j, 1]
                     if(cur_board.grid[i+1][j+1].up == 0):
-                        return [i, j, 0]
+                        return [i+1, j+1, 0]
                     if(cur_board.grid[i+1][j+1].left == 0):
-                        return [i, j, 3]
+                        return [i+1, j+1, 3]
         
         moves = []
         
