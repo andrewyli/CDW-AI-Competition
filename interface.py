@@ -61,8 +61,8 @@ def main():
     p2 = Player_Two(0)
 
     curturn = 1  # whoever's turn it is
-    i = 0
-    while i < 2 * GRID_SIZE * (GRID_SIZE + 1):
+    turn_count = 0
+    while turn_count < 2 * GRID_SIZE * (GRID_SIZE + 1):
         for event in pygame.event.get():
             if event.type == QUIT:
                 sys.exit()
@@ -136,8 +136,8 @@ def main():
             curturn = curturn % 2 + 1  # if a square wasn't filled, it's now the next person's turn
         pygame.display.update()
         game.boards.append(cur_board)
-        i += 1
-        time.sleep(0.25)
+        turn_count += 1
+        time.sleep(0.01)
     # game_end function
     game_end(game, p1, p2)
 main()
