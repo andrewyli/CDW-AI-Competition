@@ -61,8 +61,8 @@ def main():
     p2 = Player_Two(0)
 
     curturn = 1  # whoever's turn it is
-    i = 0
-    while i < 2 * GRID_SIZE * (GRID_SIZE + 1):
+    turns = 0
+    while turns < 2 * GRID_SIZE * (GRID_SIZE + 1):
         for event in pygame.event.get():
             if event.type == QUIT:
                 sys.exit()
@@ -110,22 +110,43 @@ def main():
             triple = p2.move(game)
         if triple[0] != -1:
             cur_board.fill_edge(triple[0], triple[1], triple[2], curturn)
-        if cur_board.grid[triple[0]][triple[1]].left != 0 and cur_board.grid[triple[0]][triple[1]].down != 0 and cur_board.grid[triple[0]][triple[1]].right != 0 and cur_board.grid[triple[0]][triple[1]].up != 0:  # if a square was filled in
-            cur_board.grid[i][j].filled = True
-            if (curturn == 1):
-                p1.score += 1
-            else:
-                p2.score += 1
-            if curturn == 1:
-                p1.score += 1
-            else:
-                p2.score += 1
-        else:
+        
+        box = False
+        for i in range(len(cur_board.grid)):
+            for j in range(len(cur_board.grid)):
+                if(i > 0):          #this massive block is to make sure it counts squares right (hint: it still doesn't)
+                    le = (cur_board.grid[i][j].left != 0 or cur_board.grid[i - 1][j].right != 0)
+                else:
+                    le = (cur_board.grid[i][j].left != 0)
+                if(j < len(cur_board.grid) - 1):
+                    do = (cur_board.grid[i][j].down != 0 or cur_board.grid[i][j + 1].up != 0)
+                else:
+                    do = (cur_board.grid[i][j].down != 0)
+                if(i < len(cur_board.grid) - 1):
+                    ri = (cur_board.grid[i][j].right != 0 or cur_board.grid[i + 1][j].left != 0)
+                else:
+                    ri = (cur_board.grid[i][j].right != 0)
+                if(j > 0):
+                    up = (cur_board.grid[i][j].up != 0 or cur_board.grid[i][j - 1].down != 0)
+                else:
+                    up = (cur_board.grid[i][j].up != 0)
+                if le and do and ri and up and cur_board.grid[i][j].filled == False:  
+                    # if a square was filled in this turn
+                    cur_board.grid[i][j].filled = True
+                    if (curturn == 1): 
+                        p1.score += 1
+                    if(curturn == 2):
+                        p2.score += 1
+                    
+                    box = True
+                    
+        if not box:
             curturn = curturn % 2 + 1  # if a square wasn't filled, it's now the next person's turn
         pygame.display.update()
         game.boards.append(cur_board)
         time.sleep(0.01)
-        i += 1
+        turns += 1
+        
     # game_end function
     game_end(game, p1, p2)
 main()
