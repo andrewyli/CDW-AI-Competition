@@ -1,5 +1,6 @@
 from game import Game
 from board import Board
+
 import random
 
 
@@ -40,7 +41,6 @@ class Player_One:
             for j in range(size):
                 gridboxes[i][j] = (cur_board.grid[i][j].down + cur_board.grid[i][j].right + cur_board.grid[i+1][j+1].up + cur_board.grid[i][j].left)
                 
-        print gridboxes
         
         for i in range(size):
             for j in range(size):
@@ -82,6 +82,7 @@ class Player_One:
             rand = random.randint(0,len(moves) - 1)
             return moves[rand]
         
+
         else:
             for i in range(len(cur_board.grid)):
                 for j in range(len(cur_board.grid)):
@@ -93,7 +94,7 @@ class Player_One:
                         return [i, j, 2]
                     elif cur_board.grid[i][j].left == 0:
                         return [i, j, 3]
-        
+                    
         return[-1, -1, -1]                
                     
     
