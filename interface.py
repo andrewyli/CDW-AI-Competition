@@ -1,5 +1,6 @@
 """
 interface.py: sets up the board and helps players interact.
+DO NOT EDIT UNLESS INSTRUCTED TO
 """
 from board import Board
 from game import Game
