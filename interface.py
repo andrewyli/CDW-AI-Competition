@@ -47,6 +47,13 @@ def setup_dots():
     return dots
 
 
+def game_end(game, p1, p2):
+    print "---------Final Score---------"
+    print "P1: " + str(p1.score)
+    print "P2: " + str(p2.score)
+    sys.exit()
+
+
 def main():
     game = setup()
     dots = setup_dots()
@@ -54,7 +61,7 @@ def main():
     p2 = Player_Two(0)
 
     curturn = 1  # whoever's turn it is
-    while True:
+    while not game.finished():
         for event in pygame.event.get():
             if event.type == QUIT:
                 sys.exit()
@@ -102,10 +109,8 @@ def main():
             triple = p2.move(game)
         if triple[0] != -1:
             cur_board.fill_edge(triple[0], triple[1], triple[2], curturn)
-        print triple
-        if cur_board.grid[i][j].left != 0 and cur_board.grid[i][j].down != 0 and cur_board.grid[i][j].right != 0 and cur_board.grid[i][j].up != 0:  # if a square was filled in
+        if cur_board.grid[triple[0]][triple[1]].left != 0 and cur_board.grid[triple[0]][triple[1]].down != 0 and cur_board.grid[triple[0]][triple[1]].right != 0 and cur_board.grid[triple[0]][triple[1]].up != 0:  # if a square was filled in
             cur_board.grid[i][j].filled = True
-            print "yas"
             if (curturn == 1):
                 p1.score += 1
             else:
@@ -118,7 +123,7 @@ def main():
             curturn = curturn % 2 + 1  # if a square wasn't filled, it's now the next person's turn
         pygame.display.update()
         game.boards.append(cur_board)
-        time.sleep(1)
-        if game.fill_count() == GRID_SIZE ** 2:
-            sys.exit()
+        time.sleep(0.01)
+    # game_end function
+    game_end(game, p1, p2)
 main()
